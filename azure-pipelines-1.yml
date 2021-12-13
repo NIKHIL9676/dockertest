@@ -38,6 +38,6 @@ steps:
 - task: Docker@2
   displayName: buildAndPush
   inputs:
-    containerRegistry: docker connection
-    repository: naveen412/azure1
+    containerRegistry: acrnaveen1
+    repository: azure
     Dockerfile: Dockerfile
