@@ -39,4 +39,4 @@ steps:
   inputs:
     containerRegistry: trigger
     repository: naveen412/azure
-    Dockerfile: Dockerfile
+    dockerfile: Dockerfile
