@@ -1,35 +1,21 @@
-pipeline{
-    agent any
-    tools{
-        gradle 'gradle-7.1.1'
-    }
-    stages{
-        stage('git checkout'){
-            steps{
-                git branch: 'master',
-    url: 'https://github.com/cloudtechmasters/spring-boot-gradle-demo.git'
-            }
+pipeline {
+          agent any 
+          tools {
+          //maven is tool as M2_HOME
+          maven "M2_HOME"
+          }
+        stages{
+        stage ('checkout'){ 
+        steps {
+        //clone the repositry from git 
+        git 'https://github.com/NIKHIL9676/jenkins.git'
         }
-        stage('build gradle project'){
-            steps{
-                sh 'gradle clean build'
-            }
         }
-        
-        stage('build docker image from file'){
-            steps{
-                sh 'docker image build -t 164867375549.dkr.ecr.us-east-1.amazonaws.com/spring-boot-gradle-demo:${BUILD_NUMBER} .'
-            }
-        }
-        
-        stage("Push the docker image to ecr registry"){
-            steps{
-                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ecr-credentials', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
-                    sh 'aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 164867375549.dkr.ecr.us-east-1.amazonaws.com'
-                    sh 'docker image push 164867375549.dkr.ecr.us-east-1.amazonaws.com/spring-boot-gradle-demo:${BUILD_NUMBER}'
-                }
-            }
-        }
-        
-    }
-}
+        stage ('build'){
+        steps {
+        //run maven build on unix agent
+        sh "mvn -Dmaven.test.failure.ignore=true clean package"
+         }
+         }
+		 }
+		 }
