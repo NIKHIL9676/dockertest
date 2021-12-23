@@ -22,4 +22,16 @@ steps:
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
 
+- task: Docker@2
+  inputs:
+    containerRegistry: 'ACR-SC'
+    repository: 'naveen12'
+    command: 'buildAndPush'
+    Dockerfile: 'Dockerfile'
+
+- task: AzureWebAppContainer@1
+  inputs:
+    azureSubscription: 'Free Trial(f87aaef8-047b-488d-bf1c-b9837e226a9f)'
+    appName: 'azuredeployacr'
+    containers: 'naveen12'
 
