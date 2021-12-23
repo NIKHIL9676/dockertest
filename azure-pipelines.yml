@@ -32,5 +32,5 @@ steps:
   inputs:
     azureSubscription: 'Free Trial(f87aaef8-047b-488d-bf1c-b9837e226a9f)'
     appName: 'azuredeployacr'
-    containers: 'naveen12'
+    containers: 'naveen1.azurecr.io/naveen12:latest'
 
